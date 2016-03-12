@@ -1,0 +1,8 @@
+{
+  "name": "lisztz",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular-bootstrap": "^1.2.4"
+  },
+  "private": true
+}
