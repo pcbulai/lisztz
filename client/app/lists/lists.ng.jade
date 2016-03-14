@@ -3,7 +3,7 @@ h1
     | Lisztz
 ul.nav.nav-sidebar
   li(ui-sref-active="active")
-    a() Inbox
+    a(ui-sref="root.tasks({listId: 'inbox'})") Inbox
 ul.nav.nav-sidebar
   li(ui-sref-active="active")
     a() Today
@@ -13,6 +13,20 @@ ul.nav.nav-sidebar
     a() Scheduled
   li(ui-sref-active="active")
     a() Someday
-//- ul.nav.nav-sidebar
-//-   li
-//-     a() Nav item
+
+  li(ui-sref-active="active", ng-repeat="list in vm.lists")
+    a(ui-sref="root.tasks({listId: list.url })") {{list.name}}
+      //- span.badge.pull-right {{vm.incompleteCount()}}
+      span(ng-click="vm.deleteList(list._id)").pull-right.glyphicon.glyphicon-trash
+    
+div.nav-sidebar.fixed-bottom
+  ul.nav.nav-sidebar
+    li(ng-show="vm.showNewList")
+      .form-group
+        input.form-control(ng-model="vm.listName" placeholder="Add new list")
+    li(ng-click="vm.showNewList = true" ng-show="!vm.showNewList")
+      a.text-center
+        span.glyphicon.glyphicon-plus
+    li(ng-show="vm.showNewList")
+      a(ng-click="vm.addList(vm.listName); vm.listName = '';" ).text-center.btn.btn-success
+        span.glyphicon.glyphicon-ok

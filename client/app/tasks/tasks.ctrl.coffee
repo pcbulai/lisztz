@@ -1,20 +1,29 @@
-TodosListCtrl = ($scope, $meteor) ->
+TodosListCtrl = ($scope, $meteor, $stateParams, $reactive) ->
   'ngInject'
 
   vm = this
 
-  $scope.subscribe 'tasks'
+  $reactive(@).attach $scope
 
-  vm.tasks = $meteor.collection(->
-    Tasks.find $scope.getReactively('vm.query'), sort: createdAt: -1
+  @listName = $stateParams.listId
+
+  @listUrl = url: @listName
+
+  @subscribe 'tasks'
+  @subscribe 'lists'
+
+  @helpers(
+    list: () =>
+      Lists.findOne @listUrl
+    lists: () =>
+      Lists.find {}
+    tasks: () =>
+      Tasks.find @getReactively('query'), sort: createdAt: -1
   )
 
-  vm.addTask = (newTask) ->
-    $meteor.call 'addTask', newTask
-    return
-
-  vm.addNewList = (name) ->
-    $meteor.call 'addList', name
+  vm.addTask = (newTask, listId) ->
+    console.log listId
+    $meteor.call 'addTask', newTask, listId
     return
 
   vm.deleteTask = (task) ->
@@ -33,23 +42,22 @@ TodosListCtrl = ($scope, $meteor) ->
     $meteor.call 'setDate', task._id, date
     return
 
-  vm.click = ->
-    $meteor.call 'getLists', (data) ->
-      console.log data
-      return
-    return
-
-  $scope.$watch angular.bind(this, ->
-    @hideCompleted
-  ), ->
-    if vm.hideCompleted
-      vm.query = checked: $ne: true
+  $scope.$watch angular.bind(@, ->
+    @list
+  ), =>
+    if @list
+      @query =
+        listId: @list._id
+        checked:
+          $ne: false
     else
-      vm.query = {}
+      @query = {}
     return
 
-  vm.incompleteCount = ->
-    Tasks.find(checked: $ne: true).count()
+  vm.incompleteCount = =>
+    Tasks.find(@query).count()
+
+
   return
 
 angular.module('app').controller 'TodosListCtrl', TodosListCtrl

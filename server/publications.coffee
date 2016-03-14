@@ -4,4 +4,6 @@ Meteor.publish 'tasks', ->
     { owner: @userId }
   ]
 Meteor.publish 'lists', ->
-  Lists.find $or: [ { owner: @userId } ]
+  Lists.find $or: [
+    { owner: @userId }
+  ]

@@ -1,18 +1,31 @@
 header
-  h1 Todo List ( {{ vm.incompleteCount() }} )
-  label.hide-completed
-    input(type='checkbox', ng-model='vm.hideCompleted')
-    |     Hide Completed Tasks
-  // add a form below the h1
-  form.new-task(ng-submit="vm.addTask(newTask); vm.newTask='';", ng-show='$root.currentUser')
-    input(ng-model='vm.newTask', type='text', name='text', placeholder='Type to add new tasks')
-  input(ng-model='vm.newList', type='text', name='text', placeholder='Type to add new tasks')
-  button(ng-click='vm.click();', name='button')
+  //- label.hide-completed
+  //-   input(type='checkbox', ng-model='vm.hideCompleted')
+  //-   |     Hide Completed Tasks
+  //- // add a form below the h1
+  form.form-horizontal(ng-submit="vm.addTask(vm.newTask, vm.listId || vm.list._id); vm.newTask='';", ng-show='$root.currentUser')
+    fieldset
+      // Form Name
+      legend {{vm.list.name || vm.listName | capitalize}}
+      
+      
+        span.pull-right ( {{vm.incompleteCount()}} )
+      // Button Drop Down
+      .form-group
+        .input-group
+          input.form-control(ng-model='vm.newTask', type='text', name='text', placeholder='Type to add new tasks')
+          .input-group-btn
+            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+              | List 
+              span.caret
+            ul.dropdown-menu.pull-right
+              li(ng-repeat="list in vm.lists")
+                a(ng-click="vm.listId = list._id") {{list.name}}
+
 ul
   li(ng-repeat='task in vm.tasks', ng-class="{'checked': task.checked, 'private': task.private}")
     button.delete(ng-click='vm.deleteTask(task)') ×
     input.toggle-checked(type='checkbox', ng-checked='task.checked', ng-click='vm.setChecked(task)')
-    button(ng-click='vm.setDate(task, dt)', name='button') Set
     button.toggle-private(ng-if='task.owner === $root.currentUser._id', ng-click='vm.setPrivate(task)')
       | {{task.private === true ? "Private" : "Public"}}
     span.text

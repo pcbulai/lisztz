@@ -1,7 +1,7 @@
 @Tasks = new (Mongo.Collection)('tasks')
 Meteor.methods
 
-  addTask: (text) ->
+  addTask: (text, listId) ->
     # Make sure the user is logged in before inserting a task
     if !Meteor.userId()
       throw new (Meteor.Error)('not-authorized')
@@ -9,10 +9,10 @@ Meteor.methods
     Tasks.insert
       text: text
       createdAt: new Date
+      listId: listId
       owner: Meteor.userId()
       username: Meteor.user().username
 
-    Lists.insert count: Tasks.find().count()
     return
 
   deleteTask: (taskId) ->
