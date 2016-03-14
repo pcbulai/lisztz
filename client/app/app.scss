@@ -1,3 +1,4 @@
+@import '{}/client/app/vars';
 /**
  *  If you want to override some bootstrap variables, you have to change values here.
  *  The list of variables are listed here bower_components/bootstrap-sass/assets/stylesheets/bootstrap/_variables.scss
@@ -5,26 +6,70 @@
 
 /* Color palette */
 
-$gray-base:              #212121;
+$gray-base:              #263238;
 $gray-darker:            lighten($gray-base, 13.5%); // #222
 $gray-dark:              lighten($gray-base, 20%);   // #333
 $gray:                   lighten($gray-base, 33.5%); // #555
-$gray-light:             lighten($gray-base, 46.7%); // #777
+$gray-light:             lighten($gray-base, 56.7%); // #777
 $gray-lighter:           lighten($gray-base, 80.5%); // #eee
 
-$brand-primary:         #3F51B5;
-$brand-success:         #00C853;
-$brand-info:            #40C4FF;
-$brand-warning:         #FF9800;
-$brand-danger:          #F44336;
+
+$brand-primary:         $indigo;
+$brand-primary-dark:    $indigo-700;
+$brand-primary-light:   $indigo-300;
+
+$brand-success:         $green;
+$brand-success-dark:    $green-700;
+$brand-success-light:   $green-300;
+
+
+$brand-info:            $light-blue;
+$brand-info-dark:       $light-blue-700;
+$brand-info-light:      $light-blue-50;
+
+
+$brand-warning:         $orange;
+$brand-warning-dark:    $orange-700;
+$brand-warning-light:   $orange-300;
+
+$brand-danger:          $red;
+$brand-danger-dark:     $red-700;
+$brand-danger-light:    $red-300;
 
 $navbar-height:  64px;
 
 $navbar-inverse-color:  lighten($gray-light, 15%);
 $navbar-inverse-bg:     $brand-primary;
-$navbar-inverse-border: darken($navbar-inverse-bg, 7%);
+$navbar-inverse-border: $brand-primary-dark;
 
 $navbar-inverse-link-color: $gray-lighter;
+
+//== Buttons
+//
+
+$btn-default-color:              $gray-dark;
+$btn-default-bg:                 $gray-lighter;
+$btn-default-border:             $gray-light;
+
+$btn-primary-color:              $gray-lighter;
+$btn-primary-bg:                 $brand-primary;
+$btn-primary-border:             $brand-primary-dark;
+
+$btn-success-color:              $gray-lighter;
+$btn-success-bg:                 $brand-success;
+$btn-success-border:             $brand-success-dark;
+
+$btn-info-color:                 $gray-lighter;
+$btn-info-bg:                    $brand-info;
+$btn-info-border:                $brand-info-dark;
+
+$btn-warning-color:              $gray-lighter;
+$btn-warning-bg:                 $brand-warning;
+$btn-warning-border:             $brand-warning-dark;
+
+$btn-danger-color:               $gray-lighter;
+$btn-danger-bg:                  $brand-danger;
+$btn-danger-border:              $brand-danger-dark;
 
 @import '{reywood:bootstrap3-sass}/bootstrap';
 

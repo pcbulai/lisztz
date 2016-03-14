@@ -11,6 +11,7 @@ Meteor.methods
       url: name.replace(RegExp(' ', 'g'), '-').toLowerCase()
       createdAt: new Date
       owner: Meteor.userId()
+      private: true
       username: Meteor.user().username
 
     return
@@ -19,18 +20,27 @@ Meteor.methods
 
     list = Lists.findOne(listId)
 
-    Tasks.remove listId: listId
-
     if list.private and list.owner != Meteor.userId()
       # If the list is private, make sure only the owner can delete it
       throw new (Meteor.Error)('not-authorized')
 
+
     Lists.remove listId
+    Tasks.remove listId: listId
 
     return
 
-  findList: (listUrl) ->
+  setPrivateList: (listId, setToPrivate) ->
+    list = Lists.findOne(listId)
 
-    list = Lists.findOne(listUrl)
+    # Make sure only the task owner can make a task private
+    if list.owner != Meteor.userId()
+      throw new (Meteor.Error)('not-authorized')
+    Tasks.update listId: listId,
+      $set:
+        private: setToPrivate
+    , multi: true
+    Lists.update listId, $set: private: setToPrivate
 
-    return list
+
+    return

@@ -1,33 +1,50 @@
-header
-  //- label.hide-completed
-  //-   input(type='checkbox', ng-model='vm.hideCompleted')
-  //-   |     Hide Completed Tasks
-  //- // add a form below the h1
-  form.form-horizontal(ng-submit="vm.addTask(vm.newTask, vm.listId || vm.list._id); vm.newTask='';", ng-show='$root.currentUser')
-    fieldset
-      // Form Name
-      legend {{vm.list.name || vm.listName | capitalize}}
-      
-      
-        span.pull-right ( {{vm.incompleteCount()}} )
-      // Button Drop Down
-      .form-group
-        .input-group
-          input.form-control(ng-model='vm.newTask', type='text', name='text', placeholder='Type to add new tasks')
-          .input-group-btn
-            button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
-              | List 
-              span.caret
-            ul.dropdown-menu.pull-right
-              li(ng-repeat="list in vm.lists")
-                a(ng-click="vm.listId = list._id") {{list.name}}
+h1 {{vm.list.name || vm.listName | capitalize}}
+  span.pull-right ( {{vm.incompleteCount()}} )
 
-ul
-  li(ng-repeat='task in vm.tasks', ng-class="{'checked': task.checked, 'private': task.private}")
-    button.delete(ng-click='vm.deleteTask(task)') ×
-    input.toggle-checked(type='checkbox', ng-checked='task.checked', ng-click='vm.setChecked(task)')
-    button.toggle-private(ng-if='task.owner === $root.currentUser._id', ng-click='vm.setPrivate(task)')
-      | {{task.private === true ? "Private" : "Public"}}
-    span.text
-      strong {{task.username}}
-      |  - {{task.text}}
+hr
+form.form-horizontal(ng-submit="vm.addTask(vm.newTask, vm.listId || vm.list._id); vm.newTask='';", ng-show='$root.currentUser')
+  .form-group
+    .input-group
+      input.form-control(ng-model='vm.newTask', type='text', name='text', placeholder='Type to add new tasks')
+      .input-group-btn
+        button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+          | {{vm.list.name || vm.selectedList || vm.listName | capitalize}}
+          i.fa.fa-caret-down
+        ul.dropdown-menu.pull-right
+          li(ng-repeat="list in vm.lists")
+            a(ng-click="vm.listId = list._id; vm.selectedList = list.name") {{list.name}}
+          li
+            a(ng-click="vm.listId = null; vm.selectedList = list.name") Inbox
+            
+p.lead Active items
+
+span(ng-repeat='task in vm.tasks' ng-if="!task.checked")
+  .panel.panel-default
+    .panel-body
+      .checkbox.pull-left
+        label
+          input(type='checkbox', ng-checked='task.checked', ng-click='vm.setChecked(task)')
+          span(ng-if="!task.checked") {{task.text}}
+      .btn-group.pull-right(role='group')
+        button.btn.btn-default(ng-if='task.owner === $root.currentUser._id && task.private', ng-click='vm.setPrivate(task)')
+          i.fa.fa-lock
+        button.btn.btn-default(ng-if='task.owner === $root.currentUser._id && !task.private', ng-click='vm.setPrivate(task)')
+          i.fa.fa-unlock
+        button.btn.btn-danger(ng-click='vm.deleteTask(task)')
+          i.fa.fa-trash
+
+p.lead Completed Items
+span(ng-repeat='task in vm.tasks' ng-if="task.checked")
+  .panel.panel-default
+    .panel-body
+      .checkbox.pull-left
+        label
+          input(type='checkbox', ng-checked='task.checked', ng-click='vm.setChecked(task)')
+          s {{task.text}}
+      .btn-group.pull-right(role='group')
+        button.btn.btn-default(ng-if='task.owner === $root.currentUser._id && task.private', ng-click='vm.setPrivate(task)')
+          i.fa.fa-lock
+        button.btn.btn-default(ng-if='task.owner === $root.currentUser._id && !task.private', ng-click='vm.setPrivate(task)')
+          i.fa.fa-unlock
+        button.btn.btn-danger(ng-click='vm.deleteTask(task)')
+          i.fa.fa-trash

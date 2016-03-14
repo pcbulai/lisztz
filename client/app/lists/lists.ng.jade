@@ -3,21 +3,41 @@ h1
     | Lisztz
 ul.nav.nav-sidebar
   li(ui-sref-active="active")
-    a(ui-sref="root.tasks({listId: 'inbox'})") Inbox
+    a(ui-sref="root.tasks({listId: 'inbox'})") 
+      i.fa.fa-inbox
+      | Inbox
 ul.nav.nav-sidebar
   li(ui-sref-active="active")
-    a() Today
+    a() 
+      i.fa.fa-hourglass-start
+      | Today
   li(ui-sref-active="active")
-    a() Next
+    a() 
+      i.fa.fa-calendar
+      | Next
   li(ui-sref-active="active")
-    a() Scheduled
+    a() 
+      i.fa.fa-calendar-check-o
+      | Scheduled
   li(ui-sref-active="active")
-    a() Someday
+    a() 
+      i.fa.fa-calendar-o
+      | Someday
 
   li(ui-sref-active="active", ng-repeat="list in vm.lists")
-    a(ui-sref="root.tasks({listId: list.url })") {{list.name}}
+    a(ui-sref="root.tasks({listId: list.url })") 
+      i.fa.fa-list
+      | {{list.name}}
       //- span.badge.pull-right {{vm.incompleteCount()}}
-      span(ng-click="vm.deleteList(list._id)").pull-right.glyphicon.glyphicon-trash
+      .btn-group.pull-right(role='group')
+        button.btn.btn-default(ng-if='list.owner === $root.currentUser._id && list.private', ng-click='vm.setPrivate(list._id, !list.private)')
+          i.fa.fa-lock
+        button.btn.btn-default(ng-if='list.owner === $root.currentUser._id && !list.private', ng-click='vm.setPrivate(list._id, !list.private)')
+          i.fa.fa-unlock
+        button.btn.btn-danger(ng-click='vm.deleteList(list._id)')
+          i.fa.fa-trash
+      //- i(ng-click="vm.setPrivate(list._id, true)").pull-right.fa.fa-lock
+      //- i(ng-click="vm.deleteList(list._id)").pull-right.fa.fa-trash
     
 div.nav-sidebar.fixed-bottom
   ul.nav.nav-sidebar
@@ -26,7 +46,7 @@ div.nav-sidebar.fixed-bottom
         input.form-control(ng-model="vm.listName" placeholder="Add new list")
     li(ng-click="vm.showNewList = true" ng-show="!vm.showNewList")
       a.text-center
-        span.glyphicon.glyphicon-plus
+        i.fa.fa-plus-square
     li(ng-show="vm.showNewList")
       a(ng-click="vm.addList(vm.listName); vm.listName = '';" ).text-center.btn.btn-success
-        span.glyphicon.glyphicon-ok
+        i.fa.fa-check

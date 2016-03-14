@@ -20,6 +20,10 @@ ListsCtrl = ($scope, $meteor, $reactive) ->
     $meteor.call 'deleteList', listId
     return
 
+  @setPrivate = (listId, setPrivate) ->
+    $meteor.call 'setPrivateList', listId, setPrivate
+    return
+
   return
 
 angular.module('app').controller 'ListsCtrl', ListsCtrl

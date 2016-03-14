@@ -11,6 +11,7 @@ Meteor.methods
       createdAt: new Date
       listId: listId
       owner: Meteor.userId()
+      private: true
       username: Meteor.user().username
 
     return

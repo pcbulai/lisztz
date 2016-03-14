@@ -33,19 +33,34 @@
     & > a {
       padding: 20px;
 
-      color: #fff;
+      color: $gray-lighter;
       border: 0;
 
       font-size: 1.125em;
     }
     &:hover a {
-      background: darken($brand-primary, 20%);
+      background: $brand-primary-dark;
     }
   }
 
   & > .active > a {
     color: $brand-primary;
-    background-color: #fff;
+    background-color: $gray-lighter;
+  }
+
+  & > .active:hover a {
+    color: $brand-primary-dark;
+    background-color: $gray-lighter;
+  }
+
+  a > i {
+    margin-right: 20px;
+  }
+
+  .btn-group {
+    margin-top: -6px;
+
+    opacity: .85;
   }
 }
 
@@ -58,7 +73,7 @@
   width: 100%;
   margin-bottom: 0;
 
-  background: darken($brand-primary, 20%);
+  background: $brand-primary-dark;
 
   ul {
     width: 100%;
@@ -69,8 +84,8 @@
     cursor: pointer;
   }
 
-  .btn{
-    border-radius: 0
+  .btn {
+    border-radius: 0;
   }
 
   .form-group {
@@ -80,10 +95,10 @@
     height: auto;
     padding: 20px;
 
-    color: #fff;
+    color: $gray-lighter;
     border: none;
     border-radius: 0;
-    background: darken($brand-primary, 20%);
+    background: $brand-primary-dark;
   }
 }
 
@@ -98,22 +113,15 @@
     margin: 0 -15px;
     padding: 40px 20px 20px;
 
-    background: $brand-danger;
+    background: $brand-primary-dark;
 
 
     a {
       text-decoration: none;
 
-      color: #fff;
+      color: $gray-lighter;
 
       font-size: 36px;
     }
   }
-}
-
-
-.ng-hide {
-  transition: 2.5s linear all;
-
-  opacity: 0;
 }
