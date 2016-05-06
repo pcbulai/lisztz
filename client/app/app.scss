@@ -14,9 +14,9 @@ $gray-light:             lighten($gray-base, 56.7%); // #777
 $gray-lighter:           lighten($gray-base, 80.5%); // #eee
 
 
-$brand-primary:         $indigo;
-$brand-primary-dark:    $indigo-700;
-$brand-primary-light:   $indigo-300;
+$brand-primary:         $blue;
+$brand-primary-dark:    $blue-700;
+$brand-primary-light:   $blue-300;
 
 $brand-success:         $green;
 $brand-success-dark:    $green-700;
@@ -75,3 +75,10 @@ $btn-danger-border:              $brand-danger-dark;
 
 @import '{}/client/app/lists/lists';
 @import '{}/client/app/tasks/tasks';
+
+
+body{
+  background: $gray-lighter url('img/bcg.jpg') center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}

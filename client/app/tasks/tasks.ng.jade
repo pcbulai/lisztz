@@ -15,21 +15,33 @@ form.form-horizontal(ng-submit="vm.addTask(vm.newTask, vm.listId || vm.list._id)
             a(ng-click="vm.listId = list._id; vm.selectedList = list.name") {{list.name}}
           li
             a(ng-click="vm.listId = null; vm.selectedList = list.name") Inbox
-            
+        button.btn.btn-success(type="submit")
+          | Save
 p.lead Active items
 
 span(ng-repeat='task in vm.tasks' ng-if="!task.checked")
-  .panel.panel-default
+  .panel.panel-default(ng-class="{'panel-warning': task.faved}")
     .panel-body
       .checkbox.pull-left
         label
           input(type='checkbox', ng-checked='task.checked', ng-click='vm.setChecked(task)')
           span(ng-if="!task.checked") {{task.text}}
       .btn-group.pull-right(role='group')
+        button.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown')
+          | {{vm.list.name || vm.selectedList || vm.listName | capitalize}}
+          i.fa.fa-caret-down
+        ul.dropdown-menu.pull-right
+          li(ng-repeat="list in vm.lists")
+            a(ng-click="vm.moveTask(task, list)") {{list.name}}
+          li
+            a(ng-click="vm.moveTask(task, false)") Inbox
         button.btn.btn-default(ng-if='task.owner === $root.currentUser._id && task.private', ng-click='vm.setPrivate(task)')
           i.fa.fa-lock
         button.btn.btn-default(ng-if='task.owner === $root.currentUser._id && !task.private', ng-click='vm.setPrivate(task)')
           i.fa.fa-unlock
+        button.btn.btn-default(ng-if='task.owner === $root.currentUser._id', ng-click='vm.setStar(task, !task.faved)')
+          i.fa.fa-star(ng-if="task.faved")
+          i.fa.fa-star-o(ng-if="!task.faved")
         button.btn.btn-danger(ng-click='vm.deleteTask(task)')
           i.fa.fa-trash
 

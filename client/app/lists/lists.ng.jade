@@ -6,7 +6,6 @@ ul.nav.nav-sidebar
     a(ui-sref="root.tasks({listId: 'inbox'})") 
       i.fa.fa-inbox
       | Inbox
-ul.nav.nav-sidebar
   li(ui-sref-active="active")
     a() 
       i.fa.fa-hourglass-start
@@ -36,8 +35,6 @@ ul.nav.nav-sidebar
           i.fa.fa-unlock
         button.btn.btn-danger(ng-click='vm.deleteList(list._id)')
           i.fa.fa-trash
-      //- i(ng-click="vm.setPrivate(list._id, true)").pull-right.fa.fa-lock
-      //- i(ng-click="vm.deleteList(list._id)").pull-right.fa.fa-trash
     
 div.nav-sidebar.fixed-bottom
   ul.nav.nav-sidebar

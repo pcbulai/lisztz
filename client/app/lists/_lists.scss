@@ -73,7 +73,7 @@
   width: 100%;
   margin-bottom: 0;
 
-  background: $brand-primary-dark;
+  background: transparentize($brand-primary-dark, .45);
 
   ul {
     width: 100%;
@@ -107,13 +107,13 @@
 
   height: 100%;
 
-  background-color: $brand-primary;
+  background-color: transparentize($brand-primary, .125);
 
   h1 {
     margin: 0 -15px;
     padding: 40px 20px 20px;
 
-    background: $brand-primary-dark;
+    background: transparentize($brand-primary-dark,.35);
 
 
     a {

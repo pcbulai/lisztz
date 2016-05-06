@@ -3,7 +3,7 @@
 
   background-color: $gray-lighter;
 
-  hr{
+  hr {
     margin-bottom: 0;
   }
 
@@ -11,14 +11,16 @@
     margin-right: 0;
     margin-left: 0;
 
-    .form-control{
+    .form-control {
       height: 62px;
     }
 
-    .input-group-btn button{
+    .input-group-btn button {
       height: 62px;
+      padding-right: 30px;
+      padding-left: 30px;
 
-      i{
+      i {
         margin-left: 9px;
       }
     }
@@ -31,6 +33,26 @@
   }
 }
 
-.dropdown-menu a{
+.dropdown-menu a {
   cursor: pointer;
+}
+
+
+.panel.panel-warning {
+  background: transparentize($yellow-100, .0);
+}
+
+.panel {
+  .btn-group {
+    margin-top: 4px;
+  }
+  .dropdown-toggle {
+    margin-right: -1px;
+
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    i {
+      margin-left: 9px;
+    }
+  }
 }

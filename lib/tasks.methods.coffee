@@ -12,6 +12,8 @@ Meteor.methods
       listId: listId
       owner: Meteor.userId()
       private: true
+      checked: false
+      faved: false
       username: Meteor.user().username
 
     return
@@ -29,7 +31,7 @@ Meteor.methods
   setChecked: (taskId, setChecked) ->
     task = Tasks.findOne(taskId)
 
-    if task.private and task.owner != Meteor.userId()
+    if task.owner != Meteor.userId()
       # If the task is private, make sure only the owner can check it off
       throw new (Meteor.Error)('not-authorized')
 
@@ -55,11 +57,22 @@ Meteor.methods
 
     return
 
-  setList: (taskId, list) ->
+  setStar: (taskId, faved) ->
     task = Tasks.findOne(taskId)
 
     if task.owner != Meteor.userId()
       throw new (Meteor.Error)('not-authorized')
 
-    Tasks.update taskId, $set: list: list
+    Tasks.update taskId, $set: faved: faved
+
+    return
+  setList: (taskId, listId) ->
+    task = Tasks.findOne(taskId)
+
+    if task.owner != Meteor.userId()
+      throw new (Meteor.Error)('not-authorized')
+
+    Tasks.update taskId,
+      $set:
+        listId: listId
     return

@@ -18,7 +18,7 @@ TodosListCtrl = ($scope, $stateParams, $reactive) ->
     lists: () =>
       Lists.find {}
     tasks: () =>
-      Tasks.find @getReactively('query'), sort: checked: false, createdAt: -1
+      Tasks.find @getReactively('query'), sort: createdAt: -1
   )
 
   @addTask = (newTask, listId) =>
@@ -41,14 +41,20 @@ TodosListCtrl = ($scope, $stateParams, $reactive) ->
     @call 'setDate', task._id, date
     return
 
+  @moveTask = (task, listId) =>
+    @call 'setList', task._id, listId._id
+
+  @setStar = (task, faved) =>
+    @call 'setStar', task._id, faved
+
   $scope.$watch angular.bind(@, ->
     @list
   ), =>
     if @list
       @query =
         listId: @list._id
-        checked:
-          $ne: false
+        # checked:
+        #   $ne: false
     else
       @query = {}
     return
